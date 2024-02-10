@@ -9,7 +9,6 @@ type Server struct {
 	networkType   string
 	listenAddress string
 	listener      net.Listener
-	conn          net.Conn
 }
 
 func CreateServer(address string) Server {
@@ -35,14 +34,14 @@ func (s *Server) acceptConnections() {
 		if err != nil {
 			panic("Failed to accept connection:" + err.Error())
 		}
-		s.conn = conn
-		go s.handleConnection()
+		go handleConnection(conn)
 	}
 }
 
-func (s *Server) handleConnection() {
+func handleConnection(conn net.Conn) {
 	for {
 		buffer := make([]byte, 1024)
-		s.conn.Read(buffer)
+		conn.Read(buffer)
+		fmt.Println(string(buffer))
 	}
 }
