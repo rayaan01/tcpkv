@@ -34,14 +34,6 @@ func (s *Server) acceptConnections() {
 		if err != nil {
 			panic("Failed to accept connection:" + err.Error())
 		}
-		go handleConnection(conn)
-	}
-}
-
-func handleConnection(conn net.Conn) {
-	for {
-		buffer := make([]byte, 1024)
-		conn.Read(buffer)
-		fmt.Println(string(buffer))
+		go HandleConnection(conn)
 	}
 }
