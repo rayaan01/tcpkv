@@ -5,7 +5,7 @@ import (
 	"strings"
 )
 
-var Store = map[string]string{}
+var store = map[string]string{}
 
 func HandleConnection(conn net.Conn) {
 	for {
@@ -25,12 +25,12 @@ func HandleConnection(conn net.Conn) {
 }
 
 func handleSet(key string, value string) []byte {
-	Store[key] = value
+	store[key] = value
 	return []byte("OK\n")
 }
 
 func handleGet(key string) []byte {
-	val, ok := Store[key]
+	val, ok := store[key]
 	if ok {
 		return []byte(val + "\n")
 	} else {
