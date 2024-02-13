@@ -21,7 +21,7 @@ func CreateServer(address string) Server {
 func (s *Server) StartServer() {
 	ln, err := net.Listen(s.networkType, s.listenAddress)
 	if err != nil {
-		panic("Failed to start server:" + err.Error())
+		HandleError("Failed to start server", err)
 	}
 	s.listener = ln
 	fmt.Println("Server is listening on:", s.listenAddress)
@@ -32,7 +32,7 @@ func (s *Server) acceptConnections() {
 	for {
 		conn, err := s.listener.Accept()
 		if err != nil {
-			panic("Failed to accept connection:" + err.Error())
+			HandleError("Failed to accept connection", err)
 		}
 		go HandleConnection(conn)
 	}
